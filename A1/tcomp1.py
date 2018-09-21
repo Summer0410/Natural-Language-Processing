@@ -5,6 +5,10 @@
 						##         Login Name: Xia                             ##
 						##              MUN #: 201446135                       ##
 						#########################################################
+####################################### HOW TO RUN THE SCRIPT###################################################################
+## enter command argument to run the script. The script takes first argument as master file name and takes the second argument ## as n value. The rest arguments will be taken as comparing files .
+## ie: if you wanna find the similarities of file 1 and master file and file 2 and master file with n = 3.                    ## Enter pyhton tcomp1.py 3 file1 file 2 to run the script.
+###############################################################################################################################
 
 
 from __future__ import division
@@ -24,6 +28,7 @@ def main():
 		masterText = master.read()#get the content of the master file
 		masterText = masterText.split()
 	maxSim = -1
+	holder = ""
 	for i in range (0,len(comparingTextfiles)):
 		comparing= open (comparingTextfiles[i],"r")
 		comparingText = "";
@@ -32,11 +37,12 @@ def main():
 			comparingText = comparingText.split()
 		sim = calSim(masterText,comparingText,n)#call a function which calculates the similarity
 		if (sim > maxSim):
-			maxSim = comparingTextfiles[i]#Comparing the similarity of different comparing files and store the maxmun similarity file
+			maxSim = sim
+			holder = comparingTextfiles[i]#Comparing the similarity of different comparing files and store the maxmun similarity file
 		print("Sim(%s,%s) is %s" %(masterFile,comparingTextfiles[i],sim))
-	print("File \"%s \"is most similar to file \"%s\"" %(maxSim, masterFile))
+	print("File \"%s \"is most similar to file \"%s\"" %(holder, masterFile))
 
-
+################# A function to calculate the similarity between 2 files ##################
 def calSim(masterFile,comparingFile, n):
 	master_n_gram = calN_gram(masterFile,n)
 	comparing_n_gram = calN_gram(comparingFile,n)
@@ -59,6 +65,7 @@ def calSim(masterFile,comparingFile, n):
 	sim =  "{0:.3f}".format(1.0 - diff/2.0)
 	return sim
 
+##########################A function to build a n-gram of a textfile #############################
 def calN_gram(textList,n):
 	#*******************Get unique letters in the textFile***************************
 	listLength = len(textList)
