@@ -1,22 +1,19 @@
 from readFST import *
+import argparse
 
 def reconstructUpper(l,F):
 	fst = readFile(F)
 	lower = list(l)
-	print(lower)
 	currentState = 1
 	upper = ""
 	for lowerLength in range (0,len(lower)-1):
 		currentLower = lower[lowerLength]
+		found1 = 0
 		for i in range (2,len(fst)):
-			if(fst[i][0]==currentState and fst[i][2]==currentLower):
-				print "i:%s"%(i)
-				print"currentState%s"%(fst[i][0])
-				print"lower:%s"%(fst[i][2])
-				print"upper:%s"%(fst[i][3])
-				
+			if(fst[i][0]==currentState and fst[i][2]==currentLower and found1 == 0):
 				upper=upper+(fst[i][3])
 				currentState = fst[i][4]
+				found1 = 1
 	currentLower = lower[len(lower)-1]
 	found = 0
 	for i in range (2,len(fst)):
@@ -53,10 +50,33 @@ def reconstructLower(u,filename):
 
 	print(lower)
 
-def main:
-	lowerArray = [potPs,podPs,poSPs,poZPs,SopPs,ZopPs,doPs,dopPs,bosPs,bots,bodz,boSes,boZes,bozes]
-	upperArray = [pots,podz,poSes,poSes,poZes,Sops,Zops,doz,dops,bots,bodz,boSes,boZes,boses,bozes]
-	reconstructUpper("dops","vcePlu.fst")
+def main():
+	parser = argparse.ArgumentParser(description='Process similarity between different textfiles.')
+	parser.add_argument('fileNames', metavar='N', type=str, nargs='+',help='an string for the accumulator')
+	args = parser.parse_args().fileNames
+	constructType = args[0]
+	inputFile = args[1]
+	fstFile = args[2:len(args)]
+	fst = readFile(fstFile[0])
+	print("Composed FST has %s states and %s transitions"%(fst[0]["numberOfState"],len(fst)-2))
+	print("Lexical form: %s"%(fst[1]["lexicicals"]))
+	f = open(inputFile, "r")
+	inputArray = f.read().split("\n")
+
+	if(constructType=="surface"):
+		for i in range (1,len(inputArray)):
+			print("-----------------------------------------------------------")
+			print("Lexical form: %s"%(inputArray[i]))
+			print("Reconstructed surface forms:")
+			reconstructUpper(inputArray[i],fstFile[0])
+	if(constructType=="lexical"):
+		for i in range (1,len(inputArray)):
+			print("-----------------------------------------------------------")
+			print("Surface form: %s"%(inputArray[i]))
+			print("Reconstructed lexical forms:")
+			reconstructLower(inputArray[i],fstFile[0])
+if __name__ == "__main__":
+	main()
 
 
 
@@ -72,4 +92,5 @@ def main:
 
 
 
-	
+
+

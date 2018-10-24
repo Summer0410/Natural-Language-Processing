@@ -20,8 +20,6 @@ def readFile(file):
 			lower,upper,nextState = currentLine[1],currentLine[2],int(currentLine[3])
 			currentDic = [int(currentState),isFinalState,lower,upper,nextState]
 			fst.append(currentDic)
-	print "composed FST has %s states and %s transitions"%(fst[0]["numberOfState"],len(fst))
-	print "lexicical form: %s"%(fst[1]["lexicicals"])
 	return fst
 
 
