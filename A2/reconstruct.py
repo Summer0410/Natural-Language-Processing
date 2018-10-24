@@ -1,3 +1,10 @@
+#########################################################
+##  CS 4750 (Fall 2018), Assignment #2                 ##
+##   Script File Name: reconstruct.py                  ##
+##       Student Name: Linqiao Xia                     ##                                     
+##              MUN #: 201446135               		   ##
+#########################################################
+
 from readFST import *
 import argparse
 
@@ -47,8 +54,8 @@ def reconstructLower(u,filename):
 				lower=lower+(fst[i][2])
 				currentState = fst[i][4]
 				found = 1
-
 	print(lower)
+def composeFST(F1,F2):
 
 def main():
 	parser = argparse.ArgumentParser(description='Process similarity between different textfiles.')
@@ -65,16 +72,16 @@ def main():
 
 	if(constructType=="surface"):
 		for i in range (1,len(inputArray)):
-			print("-----------------------------------------------------------")
 			print("Lexical form: %s"%(inputArray[i]))
 			print("Reconstructed surface forms:")
 			reconstructUpper(inputArray[i],fstFile[0])
+			print("-----------------------------------------------------------")
 	if(constructType=="lexical"):
 		for i in range (1,len(inputArray)):
-			print("-----------------------------------------------------------")
 			print("Surface form: %s"%(inputArray[i]))
 			print("Reconstructed lexical forms:")
 			reconstructLower(inputArray[i],fstFile[0])
+			print("-----------------------------------------------------------")
 if __name__ == "__main__":
 	main()
 
