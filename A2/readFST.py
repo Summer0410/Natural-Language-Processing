@@ -1,3 +1,12 @@
+
+#########################################################
+##  CS 4750 (Fall 2018), Assignment #2                 ##
+##   Script File Name: reconstruct.py                  ##
+##       Student Name: Linqiao Xia                     ##                                     
+##              MUN #: 201446135               		   ##
+#########################################################
+
+#********* A function to read a fst file and store the stored version in an array of array****************8
 def readFile(file):
 	with open(file) as f:
 		content = f.readlines()
